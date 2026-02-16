@@ -1,0 +1,126 @@
+using System;
+
+class Program
+{
+    static int coffee = 10;
+    static int milk = 5;
+    static int sugar = 15;
+
+    static bool CheckResources(int needCoffee, int needMilk, int needSugar)
+    {
+        if (coffee < needCoffee)
+        {
+            Console.WriteLine("Не хватает кофе");
+            return false;
+        }
+        if (milk < needMilk)
+        {
+            Console.WriteLine("Не хватает молока");
+            return false;
+        }
+        if (sugar < needSugar)
+        {
+            Console.WriteLine("Не хватает сахара");
+            return false;
+        }
+        return true;
+    }
+
+    static void MakeCoffee(int needCoffee, int needMilk, int needSugar, string name)
+    {
+        if (CheckResources(needCoffee, needMilk, needSugar) == false)
+            return;
+
+        coffee = coffee - needCoffee;
+        milk = milk - needMilk;
+        sugar = sugar - needSugar;
+        
+        Console.WriteLine(name + " готов");
+        ShowRemains();
+    }
+
+    static void Espresso()
+    {
+        MakeCoffee(1, 0, 0, "Эспрессо");
+    }
+
+    static void Latte()
+    {
+        MakeCoffee(1, 2, 0, "Латте");
+    }
+
+    static void Cappuccino()
+    {
+        MakeCoffee(1, 1, 0, "Капучино");
+    }
+
+    static void AddSugar()
+    {
+        if (CheckResources(0, 0, 1))
+        {
+            sugar = sugar - 1;
+            Console.WriteLine("Сахар добавлен");
+        }
+    }
+
+    static void ShowRemains()
+    {
+        Console.WriteLine("Остатки:");
+        Console.WriteLine("Кофе: " + coffee);
+        Console.WriteLine("Молоко: " + milk);
+        Console.WriteLine("Сахар: " + sugar);
+    }
+
+    static void Refill()
+    {
+        coffee = 10;
+        milk = 5;
+        sugar = 15;
+        Console.WriteLine("Кофемашина заправлена");
+        ShowRemains();
+    }
+
+    static void Main(string[] args)
+    {
+        int choice = 0;
+
+        while (choice != 7)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Меню:");
+            Console.WriteLine("1. Эспрессо");
+            Console.WriteLine("2. Латте");
+            Console.WriteLine("3. Капучино");
+            Console.WriteLine("4. Добавить сахар");
+            Console.WriteLine("5. Показать остатки");
+            Console.WriteLine("6. Заправить");
+            Console.WriteLine("7. Выход");
+            Console.Write("Выберите: ");
+
+            if (int.TryParse(Console.ReadLine(), out choice))
+            {
+                if (choice == 1)
+                    Espresso();
+                else if (choice == 2)
+                    Latte();
+                else if (choice == 3)
+                    Cappuccino();
+                else if (choice == 4)
+                    AddSugar();
+                else if (choice == 5)
+                    ShowRemains();
+                else if (choice == 6)
+                    Refill();
+                else if (choice == 7)
+                    Console.WriteLine("Пока");
+                else
+                    Console.WriteLine("Нет такого пункта");
+            }
+            else
+            {
+                Console.WriteLine("Ошибка ввода");
+                choice = 0;
+            }
+        }
+    }
+}
