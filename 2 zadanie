@@ -1,6 +1,4 @@
-using System;
 
-class Program
 {
     static int coffee = 10;
     static int milk = 5;
